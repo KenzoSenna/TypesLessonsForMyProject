@@ -4,3 +4,6 @@ function showInfo(date: Date){
 }
 
 showInfo(new Date("2025-10-12"))
+
+// testando updates do TS pro JS
+console.log("Dattebayooooo!")
