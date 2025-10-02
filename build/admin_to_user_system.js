@@ -28,12 +28,25 @@ function adminAction(admin, desicao) {
         admin.kick(userToBan);
     }
 }
+
+function show_menu_actions(){
+        console.log(`
+    Olá usuário!
+    O que você deseja realizar em nosso sistema?
+    -------------------
+    1 - Criar usuário
+    2 - Promover usuário
+    3 - Selecionar usuário
+    4 - Sair
+    `);
+}
+
 function menu() {
-    console.log("\nOlá usuário!\nO que você deseja realizar em nosso sistema?\n-------------------", "\n1 - Criar usuário\n2 - Promover usuário\n3 - Selecionar usuário\n4 - Sair");
-    const guia = prompter()("O que deseja fazer?\n: ");
+    show_menu_actions()    
+    const guia = prompter()(": ");
     const decisao_1 = parseInt(guia);
     if (decisao_1 === 1) {
-        const name_to_be_created = prompter()("Qual o nome do usuário a ser criado?");
+        const name_to_be_created = prompter()("Nome do usuário a ser criado: ");
         const newUser = createUser(name_to_be_created);
         const alreadyExists = users.some(user => user.name === name_to_be_created);
         if (alreadyExists) {
@@ -46,8 +59,8 @@ function menu() {
             menu();
         }
     }
-    let users_concatenada = "";
     if (decisao_1 === 2) {
+        let users_concatenada = "";
         for (let i = 1; i < users.length; i++) {
             users_concatenada += `|\t${users[i].name}`;
         }
@@ -66,7 +79,8 @@ function menu() {
         }
     }
     if (decisao_1 === 3) {
-        const found_user_name = prompter()("Qual usuário você deseja ser? ");
+        console.log("Qual usuário você deseja ser?")
+        const found_user_name = prompter()(": ");
         const user_to_be = users.find(user => user.name === found_user_name);
         if (!user_to_be) {
             console.log(`Usuário ${found_user_name} não encontrado.`);
@@ -77,6 +91,9 @@ function menu() {
         if (isAdmin) {
             console.log(`Olá, Admin ${isAdmin.name}!`);
             const acao = parseInt(prompter()("Digite 1 para banir ou 2 para kickar: "));
+            if (acao != 1 | 2){
+                console.log("Amigão, digitou errado aí")
+            }   
             adminAction(isAdmin, acao);
             menu();
         }
@@ -85,18 +102,10 @@ function menu() {
             menu();
         }
     }
+    if (decisao_1 === 4){
+        console.log("Saindo...")
+        return
+    }
 }
-// function adminConsole() {
-//     console.log(`Olá usuário ${}`)
-// }
-// // const adminKenzo = promoteUser(finalUser)
-// if (finalUser.name === "Kenzo") {
-//     const inp = prompter()("Enter your decision: ");
-//     const decision: number = parseInt(inp);
-//     if (decision === 1) {
-//         adminAction(adminKenzo, decision)
-//     }
-// }
-// else {
-//     console.log(`Como você ${finalUser.name} não possui permissões de Admin,\n Não foi possível Banir/Kickar o usuário!`)
-// }
+
+menu()

@@ -115,9 +115,6 @@ if (decisao_1 === 1) {
     
 
 }
-
-
-
 // function adminConsole() {
 //     console.log(`Olá usuário ${}`)
 // }
